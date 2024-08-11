@@ -1,124 +1,280 @@
-# **Fake Job Classification using NLP**
+# **True & Fake Job Classification with NLP**
 
-## **Project Overview**
-In the modern job market, the surge of online job postings has made it increasingly difficult to differentiate between legitimate opportunities and fraudulent schemes. With job scams having doubled in recent years, it has become crucial to develop tools that protect job seekers from potential financial loss and identity theft. This project addresses this issue by creating an **AI-powered classifier** that utilizes **Machine Learning** and **Natural Language Processing (NLP)** to accurately identify fraudulent job listings. Our system analyzes linguistic patterns and applies advanced algorithms to enhance the security of online job searches, ensuring a safer experience for users.
+![Project Banner](path/to/banner/image.png)
 
-## **Dataset**
-- **Origin**: University of the Aegean
-- **Size**: 17,880 rows
-- **Synthetic Dataset**: Gretel.ai
-- **Size**: 5,000 rows
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Dataset](#dataset)
+- [Data Preprocessing](#data-preprocessing)
+- [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
+- [Feature Engineering](#feature-engineering)
+- [Models](#models)
+- [Results](#results)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
-## **Initial Data Analysis**
+## Overview
 
-### **Education Level**
-The dataset encompasses a wide range of educational qualifications, from Bachelor's Degrees to vocational certifications. We observed that similar qualifications were often labeled differently (e.g., "Bachelor's Degree" vs. "Bachelor's or Equivalent"), highlighting the importance of data cleaning and standardization for accurate analysis.
+This project aims to develop a robust system for classifying job postings as either genuine or fraudulent using Natural Language Processing (NLP) techniques and various machine learning models. By leveraging advanced text analysis and classification algorithms, we seek to help job seekers avoid scams and fraudulent offers in the job market.
 
-### **Industry Level**
-The job postings in our dataset span various industries, with **Information Technology and Services** representing the largest sector at 11.3% of the total entries. The top 10 industries are highlighted below, with other industries grouped under "Others" for clarity.
+### Key Objectives:
+1. Analyze textual content of job postings
+2. Identify linguistic patterns associated with fraudulent listings
+3. Develop and compare multiple classification models
+4. Provide insights into the characteristics of fake job postings
 
-## **Data Cleaning and Preprocessing**
+## Features
 
-### **Data Cleaning**
-- **Data Augmentation**: Integrated synthetic data to enhance model training.
-- **Handling Null Values**: Replaced nulls with 'Unspecified' where appropriate.
-- **Mapping Education Level**: Standardized similar educational qualifications.
-- **Location Standardization**: Extracted and standardized country codes.
-- **Industry Mapping**: Reorganized industries based on common traits.
-- **Number to Text Transformation**: Converted binary job-related columns to descriptive labels.
-- **Merging Text Columns**: Consolidated text columns for more efficient analysis.
+- **Data Merging**: Combines original and synthetic datasets for comprehensive analysis
+- **Text Preprocessing**: Implements thorough cleaning and normalization of job posting text
+- **Advanced NLP Techniques**: Utilizes TF-IDF, Count Vectorization, and Word2Vec embeddings
+- **Multiple ML Models**: Implements Naive Bayes, Random Forest, SVM, RNN, and LSTM
+- **Detailed EDA**: Provides in-depth analysis of various job posting attributes
+- **Dimensionality Reduction**: Applies PCA for feature selection and model optimization
 
-### **Text Processing**
-- **Tokenization**: Split text into individual words.
-- **Lowercasing**: Converted all text to lowercase.
-- **Removal of Non-Alphabetic Characters**: Retained only meaningful words.
-- **Stop Word Removal**: Removed common English stop words.
-- **Lemmatization**: Reduced words to their root form.
-- **Part-of-Speech Tagging**: Categorized words based on grammar.
-- **Detokenization**: Reconstructed preprocessed tokens into coherent text.
-- **Vectorization**: Applied TF-IDF, count vectorization, Word2Vec, and BERT for numerical text representation.
+## Dataset
 
-## **Exploratory Data Analysis (EDA)**
+We utilize two primary datasets:
 
-### **Employment Type**
-The majority of job listings are for **Full-time** positions (14,931 entries), followed by **Contract** and **Part-time** roles.
+1. **Original Dataset**: `fake_job_postings.csv`
+   - Source: [Kaggle](https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction)
+   - Contains: 17,880 job postings (866 fraudulent, 17,014 real)
 
-### **Locations (Country)**
-Approximately **64%** of the job postings are from the United States, followed by **Great Britain** at 10.5%.
+2. **Synthetic Dataset**: `synthetic_dataset.csv`
+   - Generated using: [Gretel](https://gretel.ai/)
+   - Purpose: Augment the original dataset and balance class distribution
 
-### **Industries**
-Before cleaning, the dataset had various industry categories. After mapping, these were consolidated into broader groups such as **Technology**, **Finance**, and **Healthcare**.
+### Data Fields:
+- `job_id`: Unique identifier for the job posting
+- `title`: Job title
+- `location`: Job location
+- `department`: Department offering the job
+- `salary_range`: Salary range for the position
+- `company_profile`: Description of the company
+- `description`: Detailed job description
+- `requirements`: Job requirements
+- `benefits`: Benefits offered
+- `telecommuting`: Whether the job allows telecommuting
+- `has_company_logo`: Whether the company logo is present
+- `has_questions`: Whether screening questions are included
+- `employment_type`: Type of employment (e.g., Full-time, Part-time)
+- `required_experience`: Required experience level
+- `required_education`: Required education level
+- `industry`: Industry of the job
+- `function`: Job function
+- `fraudulent`: Target variable (0 for genuine, 1 for fraudulent)
 
-### **Educational Qualifications**
-Educational qualifications were also standardized into broader categories, including **Bachelor**, **High School**, **Unspecified**, **Master**, and **Doctorate**.
+## Data Preprocessing
 
-### **Experience**
-The dataset shows a wide range of experience requirements, with **Mid-Senior** and **Entry-level** positions being the most common.
+### Text Cleaning
+- Lowercase conversion
+- Removal of non-alphabetic characters
+- Stopwords removal using NLTK
+- Lemmatization using WordNetLemmatizer
 
-### **Numerical Features Correlation Analysis**
-The correlation matrix reveals that job postings with company logos have a significant negative correlation with fraudulence, while job_id shows a moderate positive correlation.
+### Handling Missing Values
+- Replaced NULL values with 'Unspecified' for categorical fields
+- Used `np.nan` for numeric fields
 
-### **Bigram Analysis**
-Bigrams from genuine and fraudulent job postings reveal distinct linguistic patterns, aiding in the identification of scam postings.
+### Standardization
+- Education levels mapped to standardized categories
+- Industry categories consolidated and mapped
 
-### **Industry Disparities**
-Real job postings are dominated by the **Technology** sector, while fake postings often appear in the **Energy** sector.
+```python
+def map_education_level(education):
+    level_map = {
+        "Bachelor's Degree": 'Bachelor',
+        'High School or equivalent': 'High School',
+        # ... (other mappings)
+    }
+    return level_map.get(education, 'Other')
 
-### **Education Requirements**
-Genuine postings often require a broader range of educational qualifications, whereas fake postings tend to target lower educational levels.
+df_fake_job_pos_updated['mapped_education_level'] = df_fake_job_pos_updated['required_education'].apply(map_education_level)
+```
 
-## **Splitting Data into Train-Test**
-The dataset was split into training and testing sets using the `train_test_split` function, with a test size of **40%**.
+## Exploratory Data Analysis (EDA)
 
-## **Modeling and Vectorization**
+### Distribution Analysis
+- Genuine vs. Fraudulent job postings
+- Employment types
+- Job locations (country-wise)
+- Salary ranges
+- Industries
+- Required education levels
+- Required experience
 
-### **Overview**
-A variety of vectorization methods and machine learning algorithms were employed, including **TF-IDF**, **Count Vectorization**, **Word2Vec**, **Naive Bayes**, **Random Forest**, and **SVM**. Neural network models like **RNN** and **LSTM** were also explored, with these models showing superior performance in generalizing to unseen data.
+### Text Analysis
+- Word clouds for genuine and fraudulent postings
+- Text length distribution
+- Top bigrams and trigrams
 
-## **Conclusion**
-Our project successfully classified real and fake jobs using several machine learning models. **Naive Bayes**, **Random Forest**, and **SVM** achieved accuracies between 97% and 98%, but exhibited overfitting. **RNN** and **LSTM** models performed better on validation data, achieving **99%** accuracy, demonstrating their robustness in detecting employment scams.
+### Visualizations
+```python
+# Example: Distribution of fraudulent jobs
+sns.countplot(x='fraudulent', data=df_fake_job_pos)
+plt.title('Distribution of Fraudulent Job Postings')
+plt.show()
+```
 
-## **Installation**
+## Feature Engineering
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/fake-job-classification.git
-   cd fake-job-classification
+### Text Vectorization
+1. **TF-IDF Vectorization**
+   ```python
+   tfidf_vectorizer = TfidfVectorizer(min_df=0.01, max_df=0.99, analyzer='word')
+   tfidf_train_matrix = tfidf_vectorizer.fit_transform(X_train)
    ```
 
-2. **Create a virtual environment and activate it:**
+2. **Count Vectorization**
+   ```python
+   cnt_vectorizer = CountVectorizer(min_df=0.01, max_df=0.99, analyzer='word')
+   cnt_train_matrix = cnt_vectorizer.fit_transform(X_train)
+   ```
+
+3. **Word2Vec Embeddings**
+   ```python
+   word2vec_model = Word2Vec(sentences=X_train_tokens, vector_size=100, window=5, min_count=1, workers=4)
+   ```
+
+### Dimensionality Reduction
+- Applied PCA (Truncated SVD) to reduce feature space
+  ```python
+  pca = TruncatedSVD(n_components=230)
+  x_train_reduced = pca.fit_transform(X_train.toarray())
+  ```
+
+## Models
+
+1. **Naive Bayes**
+   ```python
+   nb_classifier = MultinomialNB(alpha=0.6)
+   ```
+
+2. **Random Forest**
+   ```python
+   rf_classifier = RandomForestClassifier(n_estimators=100, max_depth=5, min_samples_split=5, min_samples_leaf=2, max_features='sqrt')
+   ```
+
+3. **Support Vector Machine (SVM)**
+   ```python
+   svm_classifier = SVC(kernel='linear', C=0.5)
+   ```
+
+4. **Recurrent Neural Network (RNN)**
+   ```python
+   def create_rnn_model(input_shape):
+       model = Sequential([
+           LSTM(64, input_shape=input_shape, return_sequences=True),
+           Bidirectional(LSTM(64, return_sequences=True)),
+           Dropout(0.2),
+           Bidirectional(LSTM(64)),
+           Dropout(0.2),
+           Dense(1, activation='sigmoid')
+       ])
+       model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+       return model
+   ```
+
+5. **Long Short-Term Memory (LSTM)**
+   ```python
+   def create_lstm_model(input_shape):
+       model = Sequential([
+           LSTM(64, input_shape=input_shape, return_sequences=True),
+           Bidirectional(LSTM(64, return_sequences=True)),
+           Dropout(0.2),
+           Bidirectional(LSTM(64)),
+           Dropout(0.2),
+           Dense(1, activation='sigmoid')
+       ])
+       model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+       return model
+   ```
+
+## Results
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|-------|----------|-----------|--------|----------|
+| Naive Bayes | 0.95 | 0.94 | 0.95 | 0.94 |
+| Random Forest | 0.97 | 0.96 | 0.97 | 0.96 |
+| SVM | 0.96 | 0.95 | 0.96 | 0.95 |
+| RNN | 0.98 | 0.97 | 0.98 | 0.97 |
+| LSTM | 0.99 | 0.98 | 0.99 | 0.98 |
+
+*Note: These are sample results. Please replace with your actual model performance metrics.*
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/true-fake-job-classification.git
+   cd true-fake-job-classification
+   ```
+
+2. Create a virtual environment (optional but recommended):
    ```bash
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
    ```
 
-3. **Install the required packages:**
+3. Install required packages:
    ```bash
    pip install -r requirements.txt
    ```
 
-## **How to Run the Project**
+## Usage
 
-1. **Preprocess the data:**
-   Run the data cleaning and preprocessing script:
+1. Prepare your dataset:
+   - Place `fake_job_postings.csv` and `synthetic_dataset.csv` in the `data/` directory
+
+2. Run the preprocessing script:
    ```bash
-   python preprocess_data.py
+   python preprocess.py
    ```
 
-2. **Train the models:**
-   Run the model training script:
+3. Perform Exploratory Data Analysis:
    ```bash
-   python train_model.py
+   python eda.py
    ```
 
-3. **Evaluate the models:**
-   Run the evaluation script to assess model performance:
+4. Train and evaluate models:
    ```bash
-   python evaluate_model.py
+   python train_models.py
    ```
 
-4. **Make predictions:**
-   Use the trained model to classify new job postings:
+5. Make predictions on new data:
    ```bash
-   python predict.py --input sample_job_posting.txt
+   python predict.py path/to/new_job_postings.csv
    ```
+
+## Contributing
+
+We welcome contributions to improve the project! Here's how you can contribute:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgements
+
+- [Kaggle](https://www.kaggle.com/) for providing the original dataset
+- [Gretel](https://gretel.ai/) for synthetic data generation tools
+- [NLTK](https://www.nltk.org/) for NLP utilities
+- [Scikit-learn](https://scikit-learn.org/) for machine learning implementations
+- [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/) for deep learning models
+- [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/) for data visualization
+
+---
+
+**Disclaimer**: This project is for educational purposes only. While it aims to identify fraudulent job postings, it should not be solely relied upon for making decisions about job applications. Always exercise caution and conduct thorough research when applying for jobs.

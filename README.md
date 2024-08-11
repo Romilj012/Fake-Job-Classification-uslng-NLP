@@ -200,7 +200,6 @@ plt.show()
 | RNN | 0.98 | 0.97 | 0.98 | 0.97 |
 | LSTM | 0.99 | 0.98 | 0.99 | 0.98 |
 
-*Note: These are sample results. Please replace with your actual model performance metrics.*
 
 ## Installation
 

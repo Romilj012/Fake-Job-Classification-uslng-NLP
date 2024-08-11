@@ -13,8 +13,6 @@
 - [Results](#results)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 - [Acknowledgements](#acknowledgements)
 
 ## Overview
@@ -250,22 +248,6 @@ plt.show()
    python predict.py path/to/new_job_postings.csv
    ```
 
-## Contributing
-
-We welcome contributions to improve the project! Here's how you can contribute:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## Acknowledgements
 
 - [Kaggle](https://www.kaggle.com/) for providing the original dataset
@@ -274,7 +256,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - [Scikit-learn](https://scikit-learn.org/) for machine learning implementations
 - [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/) for deep learning models
 - [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/) for data visualization
-
----
-
-**Disclaimer**: This project is for educational purposes only. While it aims to identify fraudulent job postings, it should not be solely relied upon for making decisions about job applications. Always exercise caution and conduct thorough research when applying for jobs.

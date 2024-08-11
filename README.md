@@ -1,7 +1,5 @@
 # **True & Fake Job Classification with NLP**
 
-![Project Banner](path/to/banner/image.png)
-
 ## Table of Contents
 - [Overview](#overview)
 - [Features](#features)

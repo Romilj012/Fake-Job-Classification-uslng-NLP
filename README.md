@@ -12,6 +12,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Acknowledgements](#acknowledgements)
+- [References](#references)
 
 ## Overview
 
@@ -205,8 +206,8 @@ plt.show()
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/true-fake-job-classification.git
-   cd true-fake-job-classification
+   git clone https://github.com/yourusername/Fake-Job-Classification-using-NLP.git
+   cd Fake-Job-Classification-using-NLP
    ```
 
 2. Create a virtual environment (optional but recommended):
@@ -253,3 +254,13 @@ plt.show()
 - [Scikit-learn](https://scikit-learn.org/) for machine learning implementations
 - [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/) for deep learning models
 - [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/) for data visualization
+
+## References
+
+- https://www.ijraset.com/best-journal/fake-job-detection-using-machine-learning
+- https://www.researchgate.net/publication/371508732_Fake_Job_Detection_with_Machine_Learning_A_Comparison
+- https://turcomat.org/index.php/turkbilmat/article/view/13533
+- https://www.researchgate.net/publication/360849325_A_machine_learning_approach_to_detecting_fraudulent_job_types
+- https://www.hindawi.com/journals/js/2022/4583512/
+- https://www.trendytechjournals.com/files/issues/volume6/issue1-3.pdf
+- https://link.springer.com/article/10.1007/s11063-021-10727-z

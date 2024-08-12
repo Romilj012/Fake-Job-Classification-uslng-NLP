@@ -224,27 +224,21 @@ plt.show()
 ## Usage
 
 1. Prepare your dataset:
-   - Place `fake_job_postings.csv` and `synthetic_dataset.csv` in the `data/` directory
+- Place `fake_job_postings.csv` and `synthetic_dataset.csv` in the `data/` directory.
 
-2. Run the preprocessing script:
-   ```bash
-   python preprocess.py
-   ```
+2. Run the Jupyter Notebook:
+- Start Jupyter Notebook:
+  ```
+  jupyter notebook
+  ```
+- Open the `Fake_Job_Classification_with_NLP.ipynb` file in your browser.
 
-3. Perform Exploratory Data Analysis:
-   ```bash
-   python eda.py
-   ```
+3. Execute the notebook:
+- Run all cells in the notebook to perform data preprocessing, exploratory data analysis, model training, and evaluation.
 
-4. Train and evaluate models:
-   ```bash
-   python train_models.py
-   ```
+4. Make predictions on new data:
+- Use the trained models to make predictions on new job postings by following the instructions in the notebook.
 
-5. Make predictions on new data:
-   ```bash
-   python predict.py path/to/new_job_postings.csv
-   ```
 
 ## Acknowledgements
 
